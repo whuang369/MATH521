@@ -1,0 +1,187 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage[left=1.5cm,right=1.5cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{graphicx, amsmath, amsfonts, amssymb, hyperref, amsthm, comment, stmaryrd}
+\usepackage[dvipsnames]{xcolor}
+\colorlet{RED}{red}
+\theoremstyle{definition}
+\newtheorem{thm}{Theorem}[subsection]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{dfn}[thm]{Definition}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem{exm}[thm]{Example}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{notation}{Notation}
+\usepackage[title]{appendix}
+\setlength{\emergencystretch}{2pt}
+
+\newcommand{\closure}[2][3]{{}\mkern#1mu\overline{\mkern-#1mu#2}}
+
+\author{Harry Huang}
+\title{Study note of MATH 521 \& 551 - Analysis and Topology}
+\date{2024 Fall}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+    This is my study note especially made for MATH 521 (Analysis I) \& MATH 551 (Topology) in UW-Madison. My professor for MATH521 is Sergey Denissov, for MATH551 is Ruobing Zhang. I will mainly follow baby Rudin in this note, but also combined with the lectures.
+    \par This is just a highly abstart note made for reference during reviewing. Therefore, I will focus on the conclusion, lemma, remarks, and theorems that have been proved by textbook, professors, and myself. If you want to deeply learn analysis and topology, please use textbook, not this note.
+\end{abstract}
+
+\section{Number Systems and Basic Set Theory}
+
+Let's just skip this section as this one is too easy.
+
+\section{Basic Topology}
+
+\subsection{Countable Sets}
+
+\begin {thm}
+    If there is a surjection $f: A \rightarrow B$, we have $|A| \geq |B|$. If there is an injection $f: A \rightarrow B$, we have $|A| \leq |B|$. 
+\end {thm}
+
+\begin{dfn} (Equivalence between sets)
+    \hspace{0em}
+    If there is a bijection form set $A$ to set $B$, we say they have the same cardinality number.
+    In short, they are \textbf{equivalent}. We write $A \thicksim B$.
+\end{dfn}
+
+\begin{dfn} \textcolor{RED}{\bf Finite, Countable}
+    \hspace{0em}
+    \begin{itemize}
+        \item Let $S_n$ represents set \{1, 2, 3, ..., n\}. If set $A$ satisfies $A \thicksim Sn$ for some $n \in \mathbb{N}$, $A$ is {\bf finite}. If $A$ is not finite, $A$ is {\bf infinite}.
+        \item Let $S$ represents the set of all positive integers. If set $A$ satisfies $A \thicksim S$, $A$ is {\bf countable}.
+        A set is {\bf uncountable} if it is {\bf neither finite nor countable}. \footnote{There are different definitions for countable. Some people say if a set is finite, it is also countable, and infinite countable set is "infinitely countable". In the following paragraphs, we will mainly follow the definition from Rudin.}
+        \item $A$ is {\bf at most countable} if it is countable or finite.
+    \end{itemize}
+\end{dfn}
+
+\begin {rmk} A finite set can't be equivalent to one of its proper subsets, but some infinite sets can.
+\end {rmk}
+
+\begin {thm} Every infinite subset of a countable set $A$ is countable. \end{thm}
+
+\begin {thm} An at most countable union of at most countable sets are countable. \end{thm}
+
+\begin {cor} The set of rational numbers are countable, but the set of real number are not. \end{cor}
+
+\begin {cor} The set of infinite sequences $A = \{a_0, a_1, a_2, ..., a_n, ...\}$ is uncountable. \end{cor}
+
+\begin {cor}
+    $\mathbb{R} \thicksim \mathbb{R}^{2} \thicksim \mathbb{R}^{n}$ for all $n \in \mathbb{N}$. 
+\end{cor}
+
+\subsection{Metric Spaces}
+
+\begin {dfn} \textcolor{RED}{\bf Metric space, distance function}
+    \begin{itemize}
+        \item A combination of a set $X$ and a map $d: X \times X \rightarrow \mathbb{R}$, which is written as $(X, d)$, is called a {\bf metric space} if for $\forall p,\:q\in X$:
+        \begin{enumerate}
+            \item $d(p,\:q) > 0$, if $p \neq q$; $d(p,\:q) = 0$;
+            \item $d(p,\:q) = d(q,\:p)$;
+            \item $d(p,\:q) \leq d(p,\:r) + d(r,\:q)$ for $\forall r \in X$.
+        \end{enumerate}
+        \item Every function $d$ such that satisfies the three properties are called {\bf distance function}.
+    \end{itemize}
+\end {dfn}
+
+\begin {dfn} \textcolor{RED}{\bf Segment, Interval}
+    \begin{itemize}
+        \item The set of rational numbers such that $a < x < b$ for any given $a, b\in\mathbb{R}\;s.t.\;a < b$ is called the {\bf segment} $(a, b)$.
+        \item The set of rational numbers such that $a \leq x \leq b$ for any given $a, b\in\mathbb{R}\;s.t.\;a \leq b$ is called the {\bf interval} $(a, b)$.
+    \end{itemize}
+\end {dfn}
+
+\begin {dfn} \textcolor{RED}{\bf Neighborhood, Limit point, Interior point}
+    \par For any given metric space $(X, d)$ and set $E \subseteq X$, we have following definitions:
+    \begin{itemize}
+        \item A {\bf neighborhood} of a point $p$ with radius $r>0$ is a set $N_{r}(p) = \{q \in X: d(p,\:q) < r\}$.
+        \item A point $p$ is a {\bf limit point} of set $E$ if $\forall r \in R, r > 0$, we have $(N_{r}(p) \setminus \{p\}) \cap E \neq \emptyset$. The set of all limit points of set $E$ is written as $E'$.
+        \item A point $p$ is a {\bf interior point} of set $E$ if $\exists r \in R, r > 0\;s.t.\;N_{r}(p) \subseteq E$. 
+    \end{itemize}
+\end {dfn}
+
+\begin {dfn} \textcolor{RED}{\bf Closed, Open, Closure}
+    \par For any given metric space $(X, d)$ and set $E \subseteq X$, we have following definitions:
+    \begin{itemize}
+        \item Set $E$ is {\bf open} if all limit points of $E$ is in $E$. That is, $E' \subseteq E$.
+        \item Set $E$ is {\bf closed} if every point of $E$ is an interior point of $E$.
+        \item The closure $\closure{E}$ of a set $E$ is the union of its limit points and itself. That is, $\closure{E} = E \cup E'$.
+    \end{itemize}
+\end {dfn}
+
+\begin {dfn} \textcolor{RED}{\bf Complement, Perfect, Bounded, Dense}
+    \par For any given metric space $(X, d)$ and set $E \subseteq X$, we have following definitions:
+    \begin{itemize}
+        \item The complement of $E$ is $E^{c} = X \setminus E$.
+        \item $E$ is {\bf perfect} if $E = E'$.
+        \item $E$ is {\bf bounded} if there is a real number $r'$ and a point $p \in X$ s.t. $E \subseteq N_{r'}(p)$.
+        \item $E$ is {\bf dense} in $X$ if $X = \closure{E}$.
+    \end{itemize}
+\end {dfn}
+
+\begin{cor}
+    Every neighborhood is an open set.
+\end{cor}
+
+\begin{cor}
+    $\forall p \in E', \forall r > 0$, set $E \cap N_r(p)$ is infinite. Therefore, a finite set has no limit point.
+\end{cor}
+
+\begin{thm}
+    $(\bigcup_{\alpha}{E_{\alpha}})^{c} = \bigcap_{\alpha}(E_{\alpha}^{c})$. That is, the complement of a union of sets is the intersection of the complements of each set.
+\end{thm}
+
+\begin{thm}
+    A set $E$ is open if and only if its complement is closed. $E$ is closed if and only if its complement is open.
+\end{thm}
+
+\begin{thm} The relationship of the union/intersection of sets between its openness and closedness:
+    \begin{enumerate}
+        \item For a finite collection of open sets, both its intersection and union are open;
+        \item For a finite collection of closed sets, both its intersection and union are closed;
+        \item For a infinite collection of open sets, only its union is guaranteed to be open;
+        \item For a infinite collection of closed sets, only its intersection is guaranteed to be closed.
+    \end{enumerate}
+\end{thm}
+
+\begin{thm} If $X$ is a metric space and $E \subset X$, then:
+    \begin{enumerate}
+        \item $\closure{E}$ is closed;
+        \item $E = \closure{E}$ if and only if $E$ is closed;
+        \item $\forall F \subset X$ such that $E \subset F$ and $F$ is closed, $\closure{E} \subset F$.
+    \end{enumerate}
+\end{thm}
+
+\begin{cor}
+    Let $E$ be a nonempty set of real numbers which is bounded above, then\; sup $E \in \closure{E}$, and\;sup $E \in E$ if E is closed.
+\end{cor}
+
+\begin{dfn} \textcolor{RED}{\bf Open relative}
+    \begin{itemize}
+        \item For any subset $E$ and $Y$ of metric space $X$ such that $E \subset Y$, we say $E$ is {\bf open relative} to $Y$ if for
+            each point $p \in E$, there is a radius $r > 0$ such that $\forall q \in Y$ and $d(p, q) < r, q \in E$.
+        \item It's clear to see that the definition is equivalent to there is an open subset $G \subset X$ such that $E$ = $Y \cap G$.
+    \end{itemize}
+\end{dfn}
+
+\subsection{Compact Sets}
+
+\begin{dfn} \textcolor{RED}{\bf Open cover, Subcover, Compact}
+    \begin{itemize} Let $X$ be a metric space, subset $E \subset X$:
+        \item An {\bf open cover} of $E$ is a collection of open subsets $\{G_{\alpha}\}$ of $X$, such that $E \subseteq \bigcup_{\alpha}G_{\alpha}$. That is, $E$ is "covered" by $\{G_{\alpha}\}$.
+        \item A {\bf subcover} of an open cover $\{G_{\alpha}\}$ is the subset of $\{G_{\alpha_{i}}\}$, while $\{G_{\alpha_{i}}\}$ still "cover" the set $E$, that is, $\{\alpha_{i}\}\subset \{\alpha\}$ while $E \subseteq \bigcup_{\alpha_{i}}G_{\alpha_{i}}$.
+        \item $E$ is {\bf compact} in $X$ if for every open cover $\{G_{\alpha}\}$, there is a $finite$ subcover.
+    \end{itemize}
+\end{dfn}
+
+$\sum_{n=1}^{\infty}n^{-1}(1+\frac{1}{3n})^{n}$
+
+\end{document}
